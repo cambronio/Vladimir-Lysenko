@@ -1,0 +1,70 @@
+package com.company;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class Main
+{
+    public static void main(String[] args)
+    {
+        BufferedReader br = null;
+        // создание файла
+        try
+        {
+            File file = new File("Parser.txt");
+
+            if (!file.exists()) {
+                System.out.println("Файл создан");
+                file.createNewFile();
+            } else
+                {
+                    System.out.println("Файл уже создан");
+                }
+            PrintWriter pw = new PrintWriter(file);
+            pw.println ("Узел_1 'Строка'");
+            pw.println ("Узел_2 'Строка'");
+            pw.println ("Узел_3 'Строка'");
+            pw.close();
+               //файл создан и заполнен. Начало чтения созданого файла
+            br = new BufferedReader(new FileReader("Parser.txt"));
+            String line;
+            String [] arr = new String [12];
+            int i = 0;
+            while ((line = br.readLine()) != null)
+            {
+                arr[i] = line;
+                System.out.println(arr[i]);
+                i++;
+            }
+            // Данные записаны в массив. Начало разбития строк на слова по пробеллам
+            String [] arr2 = new String [10];
+            int j = 0;
+            for (int g = 0; g < 10; g++)
+            {
+                String[] words = arr[g].split("\\s");
+                for(String subStr:words)
+                {
+                    arr2[j] = subStr;
+                    System.out.println("Эллемент"+j+ ":" + arr2[j]);
+                    j++;
+                }
+            }
+            //строки разбиты, а их эллементы записанны в массив. Начинаем перебирать массив и присваивать id эллементам
+        } catch (IOException e)
+        {
+            System.out.print ("Ошибка:"+ e);
+        } finally
+        {
+            try
+            {
+                br.close();
+            } catch (IOException e)
+            {
+                System.out.print ("Ошибка:"+ e);
+            }
+        }
+    }
+}
